@@ -4,25 +4,24 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\NoteRequest;
 use App\Http\Resources\NoteResource;
+use App\Http\Resources\NoteCollection;
 use App\Models\Note;
 
 class NoteController extends Controller
 {
     public function list ()
     {
-        return NoteResource::collection(Note::all());
+        return new NoteCollection(Note::paginate(0));
     }
 
     public function store (NoteRequest $request)
     {
-        return new NoteResource(Note::create($request->all()));
+        return new NoteResource(Note::create($request->validated()));
     }
 
-    public function update(NoteRequest $request, $note_id)
+    public function update(NoteRequest $request, Note $note)
     {
-        Note::find($note_id)->update($request->all());//return true or false
-        return new NoteResource(Note::find($note_id));
+        return new NoteResource($note->update($request->validated()));
     }
-
 
 }

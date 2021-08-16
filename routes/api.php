@@ -24,8 +24,8 @@ Route::post('/login', [\App\Http\Controllers\UserController::class, 'login']);
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/notes', [\App\Http\Controllers\NoteController::class, 'list']);
     Route::post('/notes', [\App\Http\Controllers\NoteController::class, 'store']);
-    Route::put('/notes/{id}', [\App\Http\Controllers\NoteController::class, 'update']);
+    Route::put('/notes/{note}', [\App\Http\Controllers\NoteController::class, 'update']);
 
     Route::post('/logout', [\App\Http\Controllers\UserController::class, 'logout']);
-    Route::get('/user/{id}', [\App\Http\Controllers\UserController::class, 'show']);
+    Route::get('/users/{user}', [\App\Http\Controllers\UserController::class, 'show']);
 });

@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UserRequest;
+use App\Http\Requests\UserLoginRequest;
+use App\Http\Requests\UserRegisterRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -12,7 +13,7 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    public function register (UserRequest $request)
+    public function register (UserRegisterRequest $request)
     {
         $user = User::create([
             'name' => $request->name,
@@ -28,7 +29,7 @@ class UserController extends Controller
         ];
     }
 
-    public function login (UserRequest $request)
+    public function login (UserLoginRequest $request)
     {
         $user = User::where('email', $request->email)->first();
 
@@ -56,8 +57,8 @@ class UserController extends Controller
         ];
     }
 
-    public function show ($id)
+    public function show (User $user)
     {
-        return new UserResource(User::find($id));
+        return new UserResource($user);
     }
 }
